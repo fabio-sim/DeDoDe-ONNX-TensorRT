@@ -1,0 +1,8 @@
+numpy
+onnx
+onnxconverter-common
+onnxruntime-gpu
+opencv-python
+torch
+torchvision
+pillow
