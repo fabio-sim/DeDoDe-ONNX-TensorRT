@@ -1,7 +1,7 @@
 [![GitHub](https://img.shields.io/github/license/fabio-sim/DeDoDe-ONNX-TensorRT)](/LICENSE)
-![ONNX](https://img.shields.io/badge/ONNX-grey)
-![TensorRT](https://img.shields.io/badge/TensorRT-76B900)
-![GitHub Repo stars](https://img.shields.io/github/stars/fabio-sim/DeDoDe-ONNX-TensorRT)
+[![ONNX](https://img.shields.io/badge/ONNX-grey)](https://onnx.ai/)
+[![TensorRT](https://img.shields.io/badge/TensorRT-76B900)](https://developer.nvidia.com/tensorrt)
+[![GitHub Repo stars](https://img.shields.io/github/stars/fabio-sim/DeDoDe-ONNX-TensorRT)](https://github.com/fabio-sim/DeDoDe-ONNX-TensorRT/stargazers)
 [![GitHub all releases](https://img.shields.io/github/downloads/fabio-sim/DeDoDe-ONNX-TensorRT/total)](https://github.com/fabio-sim/DeDoDe-ONNX-TensorRT/releases)
 
 # DeDoDe-ONNX-TensorRT
@@ -17,14 +17,14 @@ To convert the DeDoDe models to ONNX, run [`export.py`](/export.py). We provide 
 
 <details>
 <summary>Export Example</summary>
-```bash
+<pre>
 python export.py \
     --img_size 256 256 \
     --end2end \
     --dynamic_img_size --dynamic_batch \
     --fp16
-```
-</details><br>
+</pre>
+</details>
 
 If you would like to try out inference right away, you can download ONNX models that have already been exported [here](https://github.com/fabio-sim/DeDoDe-ONNX-TensorRT/releases) or run `./weights/download.sh`.
 
@@ -57,7 +57,7 @@ Alternatively, you can also run [`infer.py`](/infer.py).
 
 <details>
 <summary>Inference Example</summary>
-```bash
+<pre>
 python infer.py \
     --img_paths assets/im_A.jpg assets/im_B.jpg \
     --img_size 256 256 \
@@ -65,8 +65,8 @@ python infer.py \
     --end2end_path weights/dedode_end2end_1024_fp16.onnx \
     --fp16 \
     --viz
-```
-</details><br>
+</pre>
+</details>
 
 ## 🚀 TensorRT Support
 
@@ -76,11 +76,11 @@ TensorRT inference is supported for the end-to-end model via the TensorRT Execut
 
 <details>
 <summary>TensorRT Example</summary>
-```bash
+<pre>
 python tools/symbolic_shape_infer.py \
   --input weights/dedode_end2end_1024.onnx \
   --output weights/dedode_end2end_1024_trt.onnx \
-  --auto_merge
+  --auto_merge<br>
 CUDA_MODULE_LOADING=LAZY && python infer.py \
   --img_paths assets/DSC_0410.JPG assets/DSC_0411.JPG \
   --img_size 256 256 \
@@ -88,8 +88,8 @@ CUDA_MODULE_LOADING=LAZY && python infer.py \
   --end2end_path weights/dedode_end2end_1024_trt.onnx \
   --trt \
   --viz
-```
-</details><br>
+</pre>
+</details>
 
 The first run will take longer because TensorRT needs to initialise the `.engine` and `.profile` files. Subsequent runs should use the cached files. Only static input shapes are supported. Note that TensorRT will rebuild the cache if it encounters a different input shape.
 
