@@ -90,7 +90,7 @@ def create_models(
                 ".onnx"
             )
 
-        providers = ["CUDAExecutionProvider"]  # , "CPUExecutionProvider"]
+        providers = ["CUDAExecutionProvider", "CPUExecutionProvider"]
 
         if trt:
             providers.insert(
