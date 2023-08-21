@@ -13,7 +13,7 @@ def parse_args() -> argparse.Namespace:
         "framework",
         type=str,
         choices=["torch", "ort"],
-        help="The LightGlue framework to measure inference time. Options are 'torch' for PyTorch and 'ort' for ONNXRuntime.",
+        help="The framework to measure inference time. Options are 'torch' for PyTorch and 'ort' for ONNXRuntime.",
     )
     parser.add_argument(
         "--megadepth_path",
