@@ -9,7 +9,7 @@ Open Neural Network Exchange (ONNX) compatible implementation of [DeDoDe 🎶 De
 
 <p align="center"><img src="assets/matches.jpg" alt="DeDoDe figure" width=80%><br><em>The DeDoDe detector learns to detect 3D consistent repeatable keypoints, which the DeDoDe descriptor learns to match. The result is a powerful decoupled local feature matcher.</em></p>
 
-<p align="center"><a href="#⏱️-inference-time-comparison"><img src="assets/latency.png" alt="Latency figure" width=90%></a><br><em>DeDoDe ONNX TensorRT provides a 2x speedup over PyTorch.</em></p>
+<p align="center"><a href="#⏱️-inference-time-comparison"><img src="assets/latency.png" alt="Latency figure" width=80%></a><br><em>DeDoDe ONNX TensorRT provides a 2x speedup over PyTorch.</em></p>
 
 ## 🔥 ONNX Export
 
@@ -105,11 +105,11 @@ The inference times of the end-to-end DeDoDe pipelines are shown below.
 <summary>Evaluation Details</summary>
 The inference time, or latency, of only the end-to-end DeDoDe pipeline is reported; that is, the time taken for image preprocessing, postprocessing, copying data between the host & device, or finding inliers (e.g., CONSAC/MAGSAC) is not measured. The inference time is defined as the median over all samples in the <a href="https://arxiv.org/abs/1804.00607">MegaDepth</a> test dataset. We use the data provided by <a href="https://arxiv.org/abs/2104.00680">LoFTR</a> <a href="https://github.com/zju3dv/LoFTR/blob/master/docs/TRAINING.md">here</a> - a total of 403 image pairs.
 
-Each image is resized such that its dimensions are `512x512` before being fed into the pipeline. The inference time of the DeDoDe pipeline is then measured for different values of the detector's `num_keypoints` parameter: 1024, 2048, 4096, and 8192. Note that TensorRT has a <a href="https://docs.nvidia.com/deeplearning/tensorrt/api/python_api/infer/Graph/Layers.html?highlight=resizecoordinatetransformation#tensorrt.ITopKLayer">hard limit</a> of 3840 keypoints.
+<br>Each image is resized such that its dimensions are `512x512` before being fed into the pipeline. The inference time of the DeDoDe pipeline is then measured for different values of the detector's `num_keypoints` parameter: 1024, 2048, 4096, and 8192. Note that TensorRT has a <a href="https://docs.nvidia.com/deeplearning/tensorrt/api/python_api/infer/Graph/Layers.html?highlight=resizecoordinatetransformation#tensorrt.ITopKLayer">hard limit</a> of 3840 keypoints.
 
 For reproducibility, the evaluation script <a href="eval.py">`eval.py`</a> is provided.
 
-<img src="assets/latency.png" alt="Latency figure">
+<p align="center"><img src="assets/latency.png" alt="Latency figure" width=80%></p>
 </details>
 
 ## Credits
