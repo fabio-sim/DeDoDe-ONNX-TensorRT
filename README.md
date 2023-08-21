@@ -9,7 +9,7 @@ Open Neural Network Exchange (ONNX) compatible implementation of [DeDoDe 🎶 De
 
 <p align="center"><img src="assets/matches.jpg" alt="DeDoDe figure" width=80%><br><em>The DeDoDe detector learns to detect 3D consistent repeatable keypoints, which the DeDoDe descriptor learns to match. The result is a powerful decoupled local feature matcher.</em></p>
 
-<p align="center"><a href="#⏱️-inference-time-comparison"><img src="assets/latency.png" alt="Latency figure" width=80%></a><br><em>DeDoDe ONNX TensorRT provides a 2x speedup over PyTorch.</em></p>
+<p align="center"><a href="#%EF%B8%8F-inference-time-comparison"><img src="assets/latency.png" alt="Latency figure" width=80%></a><br><em>DeDoDe ONNX TensorRT provides a 2x speedup over PyTorch.</em></p>
 
 ## 🔥 ONNX Export
 
