@@ -9,6 +9,8 @@ Open Neural Network Exchange (ONNX) compatible implementation of [DeDoDe 🎶 De
 
 <p align="center"><img src="assets/matches.jpg" alt="DeDoDe figure" width=80%><br><em>The DeDoDe detector learns to detect 3D consistent repeatable keypoints, which the DeDoDe descriptor learns to match. The result is a powerful decoupled local feature matcher.</em></p>
 
+<p align="center"><a href="#⏱️-inference-time-comparison"><img src="assets/latency.png" alt="Latency figure" width=90%></a><br><em>DeDoDe ONNX TensorRT provides a 2x speedup over PyTorch.</em></p>
+
 ## 🔥 ONNX Export
 
 Prior to exporting the ONNX models, please install the [requirements](/requirements.txt).
@@ -93,9 +95,22 @@ CUDA_MODULE_LOADING=LAZY && python infer.py \
 
 The first run will take longer because TensorRT needs to initialise the `.engine` and `.profile` files. Subsequent runs should use the cached files. Only static input shapes are supported. Note that TensorRT will rebuild the cache if it encounters a different input shape.
 
-## Inference Time Comparison
+## ⏱️ Inference Time Comparison
 
-(WIP)
+The inference times of the end-to-end DeDoDe pipelines are shown below.
+
+<table align="center"><thead><tr><th># Keypoints</th><th>1024</th><th>2048</th><th>3840</th><th>4096</th><th>8192</th></tr><tr><th></th><th colspan="5">Latency (ms) (RTX 4080 12GB)</th></tr></thead><tbody><tr><td>PyTorch</td><td>169.72</td><td>170.42</td><td>N/A</td><td>176.18</td><td>189.53</td></tr><tr><td>PyTorch-MP</td><td>79.42</td><td>80.09</td><td>N/A</td><td>83.8</td><td>96.93</td></tr><tr><td>ONNX</td><td>170.84</td><td>171.83</td><td>N/A</td><td>180.18</td><td>203.37</td></tr><tr><td>TensorRT</td><td>78.12</td><td>79.59</td><td>94.88</td><td>N/A</td><td>N/A</td></tr><tr><td>TensorRT-FP16</td><td>33.9</td><td>35.45</td><td>42.35</td><td>N/A</td><td>N/A</td></tr></tbody></table>
+
+<details>
+<summary>Evaluation Details</summary>
+The inference time, or latency, of only the end-to-end DeDoDe pipeline is reported; that is, the time taken for image preprocessing, postprocessing, copying data between the host & device, or finding inliers (e.g., CONSAC/MAGSAC) is not measured. The inference time is defined as the median over all samples in the <a href="https://arxiv.org/abs/1804.00607">MegaDepth</a> test dataset. We use the data provided by <a href="https://arxiv.org/abs/2104.00680">LoFTR</a> <a href="https://github.com/zju3dv/LoFTR/blob/master/docs/TRAINING.md">here</a> - a total of 403 image pairs.
+
+Each image is resized such that its dimensions are `512x512` before being fed into the pipeline. The inference time of the DeDoDe pipeline is then measured for different values of the detector's `num_keypoints` parameter: 1024, 2048, 4096, and 8192. Note that TensorRT has a <a href="https://docs.nvidia.com/deeplearning/tensorrt/api/python_api/infer/Graph/Layers.html?highlight=resizecoordinatetransformation#tensorrt.ITopKLayer">hard limit</a> of 3840 keypoints.
+
+For reproducibility, the evaluation script <a href="eval.py">`eval.py`</a> is provided.
+
+<img src="assets/latency.png" alt="Latency figure">
+</details>
 
 ## Credits
 If you use any ideas from the papers or code in this repo, please consider citing the authors of [DeDoDe](https://arxiv.org/abs/2308.08479). Lastly, if the ONNX or TensorRT versions helped you in any way, please also consider starring this repository.
